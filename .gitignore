@@ -1,0 +1,31 @@
+# Local files
+memory/
+AGENTS.md
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Logs and experiment outputs
+logs/
+runs/
+outputs/
+wandb/
+tensorboard/
+checkpoints/
+*.ckpt
+*.pt
+*.pth
+
+# Isaac / simulation generated files
+.cache/
+tmp/
