@@ -1,11 +1,14 @@
 # Local files
 memory/
 AGENTS.md
+resources/useful_materials
+.agents/
 
 # Python
 __pycache__/
 *.py[cod]
 .venv/
+.venv-*/
 venv/
 .env
 .env.*
@@ -17,6 +20,7 @@ venv/
 
 # Logs and experiment outputs
 logs/
+log/
 runs/
 outputs/
 wandb/

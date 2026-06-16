@@ -22,16 +22,16 @@ Near-term goals:
 
 ```text
 .
-├── docs/
-│   ├── 00_weekly.md
-│   ├── setup.md
-│   ├── experiment_log.md
-│   ├── meeting_notes/
-│   └── decisions/
-├── src/
-├── scripts/
-├── configs/
-└── tests/
+├── docs/                 Public project documentation and reproducibility notes
+│   ├── 00_weekly.md      Weekly progress, blockers, and next steps
+│   ├── setup.md          Environment, installation, and execution notes
+│   ├── experiment_log.md Reproducible experiment records and results
+│   ├── meeting_notes/    Meeting summaries and action items
+│   └── decisions/        Short records of important technical decisions
+├── src/                  Project source code after the baseline is understood
+├── scripts/              Utility scripts for setup, smoke tests, training, or evaluation
+├── configs/              Robot, task, training, and experiment configuration files
+└── tests/                Lightweight checks and tests that can run without full training
 ```
 
 ## Notes
