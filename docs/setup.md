@@ -26,13 +26,15 @@ Validated capabilities:
 - Small Cartpole training smoke tests.
 - Small-to-moderate Unitree Go1 flat velocity smoke tests.
 - A roughly 10-minute Go1 flat velocity stability smoke test at 256 parallel environments.
+- Native MuJoCo viewer startup under WSLg, with unstable shutdown behavior.
+- mjlab Viser browser viewer startup and timeout-triggered shutdown.
 
 This validation does not prove:
 
 - Isaac Lab or Isaac Sim local compatibility.
 - Long-running training stability for final tasks.
 - High environment-count legged robot training headroom.
-- Viewer stability under WSLg.
+- Reliable native MuJoCo / GLFW viewer shutdown under WSLg.
 - Camera/depth-sensor, rough-terrain, video-recording, or large-model memory headroom.
 
 ## MuJoCo / mjlab Smoke Tests

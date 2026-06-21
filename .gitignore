@@ -3,6 +3,7 @@ memory/
 AGENTS.md
 resources/useful_materials
 .agents/
+docs/archive/
 
 # Python
 __pycache__/

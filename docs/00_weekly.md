@@ -1,17 +1,43 @@
 # Weekly Progress Log
 
-## Week 1
+## Week 1 (2026-06-15 - 2026-06-21)
 
-### Progress
+### 本周主要工作
 
-- Repository initialized.
-- Project topic recorded as reinforcement learning control for a wheel-leg robot in Isaac Lab.
+本周主要是在 demo 到来前做前期准备。相比直接开始训练，我这周更想先把几个基础问题摸清楚：本地环境到底能跑到什么程度，哪些任务可能需要云端 GPU，以及之后读 demo 时需要提前补哪些概念。
 
-### Challenges
+目前本地在WSL2上的 MuJoCo 和 MJLab 基础链路已经初步跑通。MuJoCo 可以正常完成模型加载、物理步进和离屏渲染，MuJoCo Warp 的 GPU 路径也可以正常使用。MJLab 这边跑通了 Cartpole 的最小 PPO 测试，说明从环境创建、仿真步进到训练入口这一段流程是连得上的。
 
-- Baseline demo, Isaac Lab version, robot model, and evaluation target are not yet confirmed.
+在最小测试之后，我做了一些规模稍大的 smoke test。Cartpole 分别测试了 256、1024 和 4096 个并行环境；Go1 平地速度任务测试了 64、128 和 256 个并行环境。最后还跑了一个 256 环境、约 10 分钟的 Go1 稳定性测试，过程中没有出现崩溃、显存不足或者 GPU 资源释放异常的问题。
 
-### Next Steps
+这些结果还不能说明本地机器可以承担最终训练，但至少可以判断：本地环境适合用来学习、调试和做中等规模的快速验证。后续真正的大规模训练，还是要根据 demo 的实际复杂度再决定是否转到远程 GPU 环境。
 
-- Inspect the senior student's demo or reference implementation.
-- Record setup requirements and minimal reproduction commands.
+### Viewer 和本地测试方式
+
+Viewer 方面也有了比较明确的结论。native MuJoCo / GLFW viewer 在 WSLg 下可以打开并显示画面，但关闭过程不太稳定。这个问题目前没有继续深挖，因为 MJLab 的 Viser 浏览器 viewer 可以正常启动和关闭，已经能满足观察仿真结果的需求。
+
+所以后续本地测试暂时按这个方式进行：训练和兼容性测试优先 headless；需要看仿真画面时，优先使用 Viser 浏览器 viewer。native viewer 目前先不作为主要工具，避免在关闭窗口这种细节上消耗太多时间。
+
+### 文档和仓库整理
+
+本周也对仓库做了一些整理。README、setup 说明、experiment log 和 ignore 规则都做了初步调整。现在仓库里哪些内容用于项目说明，哪些内容用于实验记录，比之前清楚一些。
+
+这样后续接入 demo、补充测试结果和整理环境说明时，会更容易放到合适的位置，也方便之后回头查每一步测试的依据。
+
+### 理论和工具链准备
+
+除了环境测试，我也开始整理一些学习材料，主要包括强化学习基本概念、仿真和接触、MuJoCo / MJLab 工具链、ROS 2 / Gazebo / Isaac Lab 的边界，以及四元数和机器人姿态表示。
+
+这部分目前还只是建立理解框架，不算真正系统掌握。它的作用是为之后阅读 demo、配置文件和论文打基础。至少在看到 observation、action、reward、policy、contact、timestep、actuator、base orientation、projected gravity 这些概念时，可以更快判断它们属于哪一层，以及为什么会出现在机器人 RL 任务里。
+
+### 当前仍未确定的问题
+
+目前参考 demo 还没有正式检查，所以最终机器人模型、Isaac Lab 版本、Isaac Sim 版本、训练命令、RL 框架和评价方式都还不能确定。本周的测试主要覆盖 MuJoCo / MJLab 这条本地学习和验证路线，不能直接等同于最终 Isaac Lab 训练环境。
+
+另外，native viewer 的关闭问题目前只是通过 Viser 绕开了，还没有从根本上修复。考虑到它不影响 headless 测试和浏览器 viewer 使用，暂时优先级不高。
+
+### 下周计划
+
+下周如果拿到 demo，第一步会先检查项目结构、依赖和运行入口，确认最小可运行路径。重点包括机器人资产、任务配置、训练脚本、依赖版本，以及是否需要远程 GPU 环境。
+
+在最小 smoke test 跑通之前，暂时不急着做大规模训练。等基础链路确认之后，再根据 demo 的实际情况决定是在本地继续调试，还是转到 RunPod 这类纯 Linux GPU 环境上跑更重的任务。
