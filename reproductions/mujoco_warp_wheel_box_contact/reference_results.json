@@ -1,0 +1,260 @@
+{
+  "versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.6",
+    "mujoco": "3.8.1",
+    "mujoco_warp": "3.8.1",
+    "warp": "1.14.0"
+  },
+  "device": "cuda:0",
+  "full_robot": {
+    "original_world": {
+      "cpu": {
+        "wheel_box_contacts": [
+          {
+            "wheel": "wheel_left_collision",
+            "distance": -0.004213232684370428,
+            "position": [
+              -117.49789338365782,
+              72.2269363792509,
+              0.09983949795702841
+            ],
+            "distance_to_wheel_center_m": 0.09953221499272553
+          },
+          {
+            "wheel": "wheel_left_collision",
+            "distance": -0.004213232684370428,
+            "position": [
+              -117.49789351009662,
+              72.22693369263513,
+              0.09964428454518932
+            ],
+            "distance_to_wheel_center_m": 0.09953234938117198
+          },
+          {
+            "wheel": "wheel_left_collision",
+            "distance": -0.004213232684370428,
+            "position": [
+              -117.49789347597442,
+              72.22693843793489,
+              0.09999413448458713
+            ],
+            "distance_to_wheel_center_m": 0.09953220298751757
+          },
+          {
+            "wheel": "wheel_right_collision",
+            "distance": -0.014232689224623306,
+            "position": [
+              -117.4928836980455,
+              71.75012671660636,
+              0.09997535992112244
+            ],
+            "distance_to_wheel_center_m": 0.09460327729741488
+          }
+        ],
+        "qacc_finite": true
+      },
+      "gpu": {
+        "wheel_box_contacts": [
+          {
+            "wheel": "wheel_right_collision",
+            "distance": -0.014236449263989925,
+            "position": [
+              -136.51487731933594,
+              126.73963928222656,
+              1950.79443359375
+            ],
+            "distance_to_wheel_center_m": 1951.5607826105474
+          }
+        ],
+        "raw_active_contact_count": 1,
+        "raw_contacts": [
+          {
+            "position": [
+              -136.51487731933594,
+              126.73963928222656,
+              1950.79443359375
+            ],
+            "geom_ids": [
+              14,
+              0
+            ],
+            "geom_names": [
+              "wheel_right_collision",
+              "terrain_step"
+            ],
+            "world_id": 0
+          }
+        ],
+        "qacc_finite": false
+      }
+    },
+    "translated_near_origin": {
+      "cpu": {
+        "wheel_box_contacts": [
+          {
+            "wheel": "wheel_left_collision",
+            "distance": -0.00421323268437987,
+            "position": [
+              -0.1978933836578101,
+              0.22693637925088983,
+              0.09983949795702904
+            ],
+            "distance_to_wheel_center_m": 0.09953221499273394
+          },
+          {
+            "wheel": "wheel_left_collision",
+            "distance": -0.00421323268437987,
+            "position": [
+              -0.1978935100965983,
+              0.2269336926351288,
+              0.09964428454518515
+            ],
+            "distance_to_wheel_center_m": 0.09953234938118198
+          },
+          {
+            "wheel": "wheel_left_collision",
+            "distance": -0.00421323268437987,
+            "position": [
+              -0.1978934759744313,
+              0.22693843793489543,
+              0.0999941344845937
+            ],
+            "distance_to_wheel_center_m": 0.09953220298749939
+          },
+          {
+            "wheel": "wheel_right_collision",
+            "distance": -0.014232689224620256,
+            "position": [
+              -0.19288369804549654,
+              -0.24987328339364842,
+              0.09997535992114645
+            ],
+            "distance_to_wheel_center_m": 0.09460327729742418
+          }
+        ],
+        "qacc_finite": true
+      },
+      "gpu": {
+        "wheel_box_contacts": [],
+        "raw_active_contact_count": 0,
+        "raw_contacts": [],
+        "qacc_finite": true
+      }
+    }
+  },
+  "single_cylinder": {
+    "original_world": {
+      "cpu": {
+        "wheel_box_contacts": [
+          {
+            "wheel": "wheel_right_collision",
+            "distance": -0.014232689224623304,
+            "position": [
+              -117.49288369804549,
+              71.75012671660635,
+              0.09997535992112243
+            ],
+            "distance_to_wheel_center_m": 0.09460327729743147
+          }
+        ],
+        "qacc_finite": true
+      },
+      "gpu": {
+        "wheel_box_contacts": [
+          {
+            "wheel": "wheel_right_collision",
+            "distance": -0.014228819869458675,
+            "position": [
+              -117.49288940429688,
+              71.75012969970703,
+              0.10000001639127731
+            ],
+            "distance_to_wheel_center_m": 0.09459878160482023
+          }
+        ],
+        "raw_active_contact_count": 1,
+        "raw_contacts": [
+          {
+            "position": [
+              -117.49288940429688,
+              71.75012969970703,
+              0.10000001639127731
+            ],
+            "geom_ids": [
+              1,
+              0
+            ],
+            "geom_names": [
+              "wheel_right_collision",
+              "terrain_step"
+            ],
+            "world_id": 0
+          }
+        ],
+        "qacc_finite": true
+      }
+    },
+    "translated_near_origin": {
+      "cpu": {
+        "wheel_box_contacts": [
+          {
+            "wheel": "wheel_right_collision",
+            "distance": -0.014232689224619007,
+            "position": [
+              -0.1928836980454972,
+              -0.24987328339364528,
+              0.0999753599211464
+            ],
+            "distance_to_wheel_center_m": 0.09460327729742449
+          }
+        ],
+        "qacc_finite": true
+      },
+      "gpu": {
+        "wheel_box_contacts": [
+          {
+            "wheel": "wheel_right_collision",
+            "distance": -0.01423269510269165,
+            "position": [
+              -0.19288370013237,
+              -0.24987345933914185,
+              0.09997555613517761
+            ],
+            "distance_to_wheel_center_m": 0.09460331048322652
+          }
+        ],
+        "raw_active_contact_count": 1,
+        "raw_contacts": [
+          {
+            "position": [
+              -0.19288370013237,
+              -0.24987345933914185,
+              0.09997555613517761
+            ],
+            "geom_ids": [
+              1,
+              0
+            ],
+            "geom_names": [
+              "wheel_right_collision",
+              "terrain_step"
+            ],
+            "world_id": 0
+          }
+        ],
+        "qacc_finite": true
+      }
+    }
+  },
+  "fingerprint": {
+    "full_original_cpu_contact_count": 4,
+    "full_original_gpu_contact_count": 1,
+    "full_original_gpu_max_distance_to_wheel_m": 1951.5607826105474,
+    "full_original_gpu_qacc_finite": false,
+    "full_translated_cpu_contact_count": 4,
+    "full_translated_gpu_contact_count": 0,
+    "control_all_qacc_finite": true,
+    "control_each_backend_has_contact": true
+  }
+}
