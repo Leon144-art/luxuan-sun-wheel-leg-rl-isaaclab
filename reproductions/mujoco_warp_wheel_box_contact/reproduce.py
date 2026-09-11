@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.metadata
 import json
 import platform
@@ -17,9 +18,35 @@ import warp as wp
 
 
 HERE = Path(__file__).resolve().parent
-MODEL_PATH = HERE / "hopper_collision.xml"
+MODEL_PATHS = {
+    "original": HERE / "models" / "robot_physical_yaw_center_root.xml",
+    "reduced": HERE / "models" / "robot_collision_reduced.xml",
+}
 STATE_PATH = HERE / "captured_state.json"
 WHEEL_NAMES = ("wheel_left_collision", "wheel_right_collision")
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def model_metadata(name: str, path: Path) -> dict[str, Any]:
+    meshes = path.parent / "meshes"
+    return {
+        "variant": name,
+        "file": str(path.relative_to(HERE)),
+        "sha256": file_sha256(path),
+        "mesh_sha256": {
+            str(mesh.relative_to(HERE)): file_sha256(mesh)
+            for mesh in sorted(meshes.glob("*.stl"))
+        }
+        if name == "original"
+        else {},
+    }
 
 
 def configure(model: mujoco.MjModel, settings: dict[str, Any]) -> None:
@@ -122,7 +149,9 @@ def run_backend_pair(
     }
 
 
-def full_robot_cases(state: dict[str, Any], device: str) -> dict[str, Any]:
+def full_robot_cases(
+    state: dict[str, Any], device: str, model_path: Path
+) -> dict[str, Any]:
     qpos = np.asarray(state["qpos"], dtype=np.float64)
     result = {}
     for name, shift_values in (
@@ -130,7 +159,7 @@ def full_robot_cases(state: dict[str, Any], device: str) -> dict[str, Any]:
         ("translated_near_origin", state["translation_to_origin"]),
     ):
         shift = np.asarray(shift_values, dtype=np.float64)
-        model = add_step(MODEL_PATH, state["box"], shift)
+        model = add_step(model_path, state["box"], shift)
         configure(model, state["solver"])
         shifted_qpos = qpos.copy()
         shifted_qpos[:3] += shift
@@ -171,8 +200,10 @@ def cylinder_model(
     return mujoco.MjModel.from_xml_string(xml)
 
 
-def single_cylinder_cases(state: dict[str, Any], device: str) -> dict[str, Any]:
-    base_model = mujoco.MjModel.from_xml_path(str(MODEL_PATH))
+def single_cylinder_cases(
+    state: dict[str, Any], device: str, model_path: Path
+) -> dict[str, Any]:
+    base_model = mujoco.MjModel.from_xml_path(str(model_path))
     base_data = mujoco.MjData(base_model)
     base_data.qpos[:] = state["qpos"]
     mujoco.mj_forward(base_model, base_data)
@@ -224,6 +255,12 @@ def fingerprint(result: dict[str, Any]) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--device", default="cuda:0", help="Warp GPU device")
+    parser.add_argument(
+        "--robot-model",
+        choices=tuple(MODEL_PATHS),
+        default="original",
+        help="use the exact original robot asset or the collision-only control",
+    )
     parser.add_argument("--output", type=Path, help="write complete JSON result")
     parser.add_argument(
         "--expect-known-bug",
@@ -233,6 +270,8 @@ def main() -> int:
     args = parser.parse_args()
 
     state = json.loads(STATE_PATH.read_text())
+    model_path = MODEL_PATHS[args.robot_model]
+    warp_device = wp.get_device(args.device)
     result = {
         "versions": {
             "python": platform.python_version(),
@@ -241,9 +280,14 @@ def main() -> int:
             "mujoco_warp": getattr(mjw, "__version__", "unknown"),
             "warp": importlib.metadata.version("warp-lang"),
         },
-        "device": args.device,
-        "full_robot": full_robot_cases(state, args.device),
-        "single_cylinder": single_cylinder_cases(state, args.device),
+        "device": {
+            "alias": args.device,
+            "name": warp_device.name,
+            "compute_arch": getattr(warp_device, "arch", None),
+        },
+        "robot_model": model_metadata(args.robot_model, model_path),
+        "full_robot": full_robot_cases(state, args.device, model_path),
+        "single_cylinder": single_cylinder_cases(state, args.device, model_path),
     }
     result["fingerprint"] = fingerprint(result)
     rendered = json.dumps(result, indent=2)

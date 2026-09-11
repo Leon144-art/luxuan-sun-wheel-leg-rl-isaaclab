@@ -6,7 +6,24 @@
     "mujoco_warp": "3.8.1",
     "warp": "1.14.0"
   },
-  "device": "cuda:0",
+  "device": {
+    "alias": "cuda:0",
+    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "compute_arch": 89
+  },
+  "robot_model": {
+    "variant": "original",
+    "file": "models/robot_physical_yaw_center_root.xml",
+    "sha256": "45632dd6fb1cac2be4d352e0f4226ce552f4deb0cdcbd315f523c79dc4871a79",
+    "mesh_sha256": {
+      "models/meshes/calf_left.stl": "361701be7b863a9fef77f29eef2a05e9b744171d5c137b446a04ed4d1a4ffd0a",
+      "models/meshes/calf_right.stl": "f32fed66133b4f0bb8bbf2334350b981cb73fb9607d86dd0dff35a74eb12ec16",
+      "models/meshes/chassis_base.stl": "42180a906209c3a00aa27d1979006323f145867585c53229c257b2759a0b3c11",
+      "models/meshes/thigh_left.stl": "81b5c4071152b0627115def06efe3a6bb213c68c584d60d698f3699caa91559d",
+      "models/meshes/thigh_right.stl": "32a898a33374217d8dd294dd5dd636673aa828f15f6628795aa1d07edbd0fa95",
+      "models/meshes/wheel.stl": "d4cff82b7c0bc22fcca00bf9a4e7bc6fc26c6110108cee0d3d784b3b2b76ec58"
+    }
+  },
   "full_robot": {
     "original_world": {
       "cpu": {

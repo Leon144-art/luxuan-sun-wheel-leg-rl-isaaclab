@@ -1,0 +1,120 @@
+{
+  "purpose": "Record the source of the captured pose and the configuration that produced it.",
+  "scope": {
+    "type": "physics backend reproduction",
+    "input": "captured qpos",
+    "training_required": false,
+    "policy_checkpoint_required": false,
+    "training_reproduction_included": false
+  },
+  "capture": {
+    "seed": 123,
+    "parallel_environments": 512,
+    "requested_control_steps": 256,
+    "first_nonfinite_control_step": 40,
+    "first_nonfinite_physics_step": 163,
+    "environment_id": 138,
+    "optimizer_updates": 0,
+    "recovery_reset_fraction": 0.0,
+    "terrain_family": "flight",
+    "command": {
+      "forward_velocity_m_s": 0.5599804520606995,
+      "yaw_rate_rad_s": 0.21215079724788666
+    },
+    "last_finite_motor_targets": {
+      "leg_position_rad": [
+        -0.2536501884460449,
+        -0.029742807149887085,
+        -0.71473228931427,
+        0.8009655475616455
+      ],
+      "wheel_velocity_rad_s": [
+        -8.818504333496094,
+        13.214249610900879
+      ]
+    },
+    "state_used_by_reproduction": "last finite qpos immediately before the failing physics substep",
+    "state_intentionally_not_used": [
+      "qvel",
+      "qacc",
+      "actuator targets",
+      "policy observations"
+    ]
+  },
+  "state_generator": {
+    "task_role": "E7 blind stair expert B fixed-policy diagnostic",
+    "actor_input_dimensions": 500,
+    "critic_input_dimensions": 732,
+    "action_dimensions": 6,
+    "source_policy": {
+      "role": "normal-terrain expert A initialization",
+      "checkpoint_iteration": 2400,
+      "checkpoint_sha256": "03a539df6ba8fd219752f5d549b8ca01c0ffb8d7d706bc90f6ab8b3a59e4b62b",
+      "source_run_git_commit": "d832e8a2189a48e1734c0e8130b5fcdb67c4c418",
+      "checkpoint_included": false
+    },
+    "initialization": "A policy weights were mapped into B's current-frame path; the additional history inputs began with zero weights. Leg and wheel exploration standard deviations were reset, but this diagnostic used fixed inference and performed no PPO update.",
+    "stair_expert_configuration_git_commit": "13dfffa68ce009db7eaff35cf54b52d97173ab39"
+  },
+  "task_configuration": {
+    "episode_length_s": 20.0,
+    "control_period_s": 0.02,
+    "physics_timestep_s": 0.005,
+    "decimation": 4,
+    "terrain_distribution": {
+      "flat": 0.10,
+      "dense_rough": 0.05,
+      "directional_slope": 0.05,
+      "single_up": 0.50,
+      "flight": 0.20,
+      "single_down": 0.10
+    },
+    "single_step_heights_m": [0.10, 0.125, 0.15, 0.175, 0.20],
+    "flight_step_heights_m": [0.10, 0.125, 0.15],
+    "flight_steps": 3,
+    "flight_tread_m": 0.40,
+    "spawn_wheel_to_edge_m": [0.35, 0.80],
+    "height_sampling": "50% nominal height and 50% configured random height range",
+    "height_command_m": {
+      "nominal": 0.22181720963545942,
+      "random_range": [0.202486, 0.329399],
+      "hold_s": 20.0
+    },
+    "action_mapping": {
+      "policy_action_clip": 100.0,
+      "leg_position_residual_scale_rad": 0.5,
+      "wheel_velocity_scale_rad_s": 10.0,
+      "control_delay_steps": 1,
+      "wheel_command_limit_rad_s": 24.0
+    },
+    "actuators": {
+      "leg": {
+        "position_kp": 60.0,
+        "velocity_kd": 2.0,
+        "rated_torque_nm": 30.0,
+        "peak_torque_nm": 97.0
+      },
+      "wheel": {
+        "velocity_gain": 0.6,
+        "torque_limit_nm": 5.8
+      }
+    },
+    "configured_randomization_ranges": {
+      "body_mass_scale": [0.95, 1.05],
+      "wheel_friction_scale": [0.8, 1.2],
+      "actuator_gain_scale": [0.9, 1.1],
+      "sampled_values_recorded": false
+    }
+  },
+  "physics_configuration": {
+    "integrator": "implicitfast",
+    "solver": "Newton",
+    "cone": "elliptic",
+    "impratio": 10.0,
+    "iterations": 50,
+    "line_search_iterations": 20,
+    "ccd_iterations": 50,
+    "nconmax": 50,
+    "njmax": 1500
+  }
+}
